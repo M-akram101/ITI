@@ -1,0 +1,91 @@
+i/day1/templates/index.html
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickSort Visualizer</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .result {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>QuickSort Visualizer</h1>
+      <p>Enter numbers separated by commas (e.g., 5,3,1,4,2)</p>
+      <input type="text" id="numbers" placeholder="Enter numbers..." />
+      <button onclick="sortNumbers()">Sort</button>
+      <div class="result">
+        <h3>Original Array:</h3>
+        <p id="original"></p>
+        <h3>Sorted Array:</h3>
+        <p id="sorted"></p>
+      </div>
+    </div>
+
+    <script>
+      async function sortNumbers() {
+        const input = document.getElementById("numbers").value;
+        document.getElementById("original").textContent = input;
+
+        try {
+          const response = await fetch("/sort", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ numbers: input }),
+          });
+          const data = await response.json();
+          document.getElementById("sorted").textContent =
+            data.sorted.join(", ");
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+    </script>
+  </body>
+</html>

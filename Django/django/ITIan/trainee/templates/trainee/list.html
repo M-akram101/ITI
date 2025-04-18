@@ -1,0 +1,67 @@
+{% comment %} {% extends 'base.html' %} {% block title %}Courses{% endblock %}
+{% block content %}
+<h2>Courses</h2>
+<a href="{% url 'course_create' %}">Add Course</a>
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Course Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for course in courses %}
+    <tr>
+      <td>{{ course.id }}</td>
+      <td>{{ course.name }}</td>
+      <td>
+        <a href="{% url 'course_update' course.id %}">Edit</a> |
+        <a href="{% url 'course_delete' course.id %}">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %} {% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trainee List</title>
+  </head>
+  <body>
+    <h2>Trainee List</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for trainee in trainees %}
+        <tr>
+          <td>{{ trainee.id }}</td>
+          <td>{{ trainee.name }}</td>
+          <td>{{ trainee.email }}</td>
+          <td>
+            <a href="{% url 'update_trainee' trainee.id %}">Edit</a> |
+            <a href="{% url 'delete_trainee' trainee.id %}">Delete</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4">No trainees found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br />
+    <a href="{% url 'create_trainee' %}">Add New Trainee</a>
+  </body>
+</html>

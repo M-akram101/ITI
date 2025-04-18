@@ -1,0 +1,16 @@
+# Install virtualenv if not already installed
+pip install virtualenv
+
+# Create a virtual environment
+virtualenv venv
+
+# Activate the virtual environment
+source venv/bin/activate  # For macOS/Linux
+venv\Scripts\activate  # For Windows
+
+pip install django djangorestframework
+
+django-admin startproject restapi_project
+cd restapi_project
+
+python manage.py startapp api

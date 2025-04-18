@@ -1,0 +1,16 @@
+## Crowd Funding project
+
+Sw: python
+libraries: os
+Pickle for saving the data
+
+# 1
+
+"""
+Run the project from main
+"""
+Each feature has its own folder
+
+# 2
+
+Register a user --> login --> create a project

@@ -1,0 +1,109 @@
+.0/templates/index.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AkramGPT 10.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Space+Grotesk:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>AkramGPT 10.0</h1>
+      <button class="new-chat-btn" onclick="createNewChat()">
+        New Chat Session
+      </button>
+    </header>
+
+    <div id="chat-windows" class="chat-container">
+      <!-- Chat windows will be added here dynamically -->
+    </div>
+
+    <script>
+      let sessionCounter = 0;
+
+      function createNewChat() {
+        sessionCounter++;
+        const sessionId = `session_${sessionCounter}`;
+
+        const chatWindow = document.createElement("div");
+        chatWindow.className = "chat-window";
+        chatWindow.innerHTML = `
+                <div class="window-header">
+                    <h3>Chat Session ${sessionCounter}</h3>
+                    <button class="close-btn" onclick="closeChat(this)">×</button>
+                </div>
+                <div class="chat-messages" id="messages_${sessionId}"></div>
+                <div class="input-area">
+                    <input type="text" id="input_${sessionId}" 
+                           placeholder="Ask anything..."
+                           onkeypress="if(event.key === 'Enter') sendMessage('${sessionId}')">
+                    <button onclick="sendMessage('${sessionId}')">Send</button>
+                </div>
+            `;
+
+        document.getElementById("chat-windows").appendChild(chatWindow);
+        document.getElementById(`input_${sessionId}`).focus();
+      }
+
+      function closeChat(button) {
+        button.closest(".chat-window").remove();
+      }
+
+      async function sendMessage(sessionId) {
+        const inputElement = document.getElementById(`input_${sessionId}`);
+        const messagesElement = document.getElementById(
+          `messages_${sessionId}`
+        );
+        const message = inputElement.value;
+
+        if (!message.trim()) return;
+
+        appendMessage(messagesElement, message, "user");
+        inputElement.value = "";
+
+        try {
+          const response = await fetch("/chat", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              message: message,
+              session_id: sessionId,
+            }),
+          });
+
+          const data = await response.json();
+          if (data.error) {
+            throw new Error(data.error);
+          }
+
+          appendMessage(messagesElement, data.response, "ai");
+        } catch (error) {
+          appendMessage(messagesElement, `Error: ${error.message}`, "error");
+        }
+      }
+
+      function appendMessage(container, message, type) {
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${type}-message`;
+        messageDiv.textContent = message;
+        container.appendChild(messageDiv);
+        container.scrollTop = container.scrollHeight;
+      }
+
+      // Create initial chat window
+      createNewChat();
+    </script>
+  </body>
+</html>

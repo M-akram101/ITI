@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Django App{% endblock %}</title>
+  </head>
+
+  <body>
+    <header>
+      <h1>My Django App</h1>
+      <nav>
+        <a href="{% url 'course_list' %}">Courses</a> |
+        <a href="{% url 'get_all_trainees' %}">Trainees</a>
+      </nav>
+      <hr />
+    </header>
+
+    <main>{% block content %} {% endblock %}</main>
+
+    <footer>
+      <hr />
+      <p>© 2025 My Django App</p>
+    </footer>
+  </body>
+</html>

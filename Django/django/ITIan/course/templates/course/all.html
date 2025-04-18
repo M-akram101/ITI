@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All courses</title>
+  </head>
+
+  <body>
+    {% comment %} {{coursesdata}} {% endcomment %}
+
+    <table>
+      <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>Action</th>
+      </tr>
+
+      {%for course in coursedata%}
+      <tr>
+        <td>{{course.0}}</td>
+        <td>{{course.1}}</td>
+        <td>
+          <a href="">delete</a>
+          <a href="">update</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            background-color: blue;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            padding: 50px;
+        }
+
+        .container {
+            margin-top: 100px;
+        }
+
+        a {
+            display: inline-block;
+            background-color: white;
+            color: blue;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin: 20px;
+        }
+
+        a:hover {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to ITIan Portal</h1>
+        <p>Choose a section to continue:</p>
+        <a href="{% url 'get_all_trainees' %}">Trainees</a>
+        <a href="{% url 'course_list' %}">Courses</a>
+    </div>
+</body>
+
+</html>
