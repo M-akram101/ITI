@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Companies List</title>
+  </head>
+
+  <body>
+    <h1>Companies</h1>
+    <hr />
+
+    <table>
+      <tr>
+        <th>Company Name</th>
+
+        <th>Company Location</th>
+
+        <th>Company Description</th>
+
+        <th>Company Employees Count</th>
+      </tr>
+
+      {% for company in Companies %}
+      <tr>
+        <td>{{company.name}}</td>
+        <td>{{company.address}}</td>
+        <td>{{company.description}}</td>
+        <td>{{company.employees_count}}</td>
+      </tr>
+
+      {% endfor %}
+    </table>
+  </body>
+</html>
